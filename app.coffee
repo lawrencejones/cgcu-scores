@@ -26,7 +26,7 @@ print = -> if (verbose? || true)
 
 # GET for homepage
 app.get '/', (req, res) ->
-  res.end 'Hello world!'
+  res.render 'index', { title: app.get 'title' }
 
 PORT = process.env.PORT || 3000
 print "Listening at localhost:#{PORT}"
