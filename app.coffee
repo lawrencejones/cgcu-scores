@@ -2,6 +2,7 @@
 express = require 'express'
 stylus  = require 'stylus'
 nib     = require 'nib'
+routes  = require './routes'
 
 # Init app
 app = express()
@@ -13,21 +14,20 @@ app.set 'view engine', 'jade'
 
 # Configure middleware
 app.use express.logger('dev')                   # logger
-app.use express.static "#{__dirname}/public"    # static
 app.use stylus.middleware                       # stylus
-  src: "#{__dirname}/public"
+  src: "#{__dirname}/stylesheets"
+  dest: "#{__dirname}/public"
   compile: (str, path) -> stylus(str)
     .set('filename', path)
-    .use nib()
+app.use express.static "#{__dirname}/public"    # static
 
-# Control logging
-print = -> if (verbose? || true)
-  console.log.apply console, arguments
+# Routes for homepage
+app.get '/', routes.home.index
 
-# GET for homepage
-app.get '/', (req, res) ->
-  res.render 'index', { title: app.get 'title' }
+# Configure scores resource routes
+app.get '/scores',      routes.scores.findAll
+app.get '/scores/:id',  routes.scores.findById
 
 PORT = process.env.PORT || 3000
-print "Listening at localhost:#{PORT}"
+console.log "Listening at localhost:#{PORT}"
 app.listen PORT
