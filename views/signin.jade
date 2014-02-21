@@ -1,0 +1,19 @@
+extend layout
+
+block scripts
+  script(type='text/javascript', src='signin.js')
+
+block signin
+  form.form-signin(role='form')
+    input.form-control(placeholder='Login', autofocus)
+    input.form-control.password(placeholder='Password', required, type='password')
+    .row
+      .col-md-12
+        a.sign-up Sign up
+        label.remember.checkbox
+          input(type='checkbox', value='remember-me')
+          span Remember me
+    button.btn.btn-lg.btn-primary.btn-block(type='submit') Sign in
+
+block content
+  block signin

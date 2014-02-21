@@ -4,9 +4,13 @@ html
     title #{title}
     link(rel='stylesheet', href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
-    script(href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css')
-    script(href='//cdnjs.cloudflare.com/ajax/libs/Chart.js/0.2.0/Chart.min.js')
   body
-    .container
-      block content
+    //- Heading block "CGCU <3's U"
+    .jumbotron.text-center
+      h1 CGCU &lt;3s U
+      p.lead Scoreboard signin
+    block append content
+  script(href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css')
+  script(href='//cdnjs.cloudflare.com/ajax/libs/Chart.js/0.2.0/Chart.min.js')
+  block append scripts
 

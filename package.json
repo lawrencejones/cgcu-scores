@@ -9,6 +9,7 @@
     "stylus": "*",
     "nib": "*",
     "mongodb": "*",
-    "monk": "*"
+    "monk": "*",
+    "passport": "*"
   }
 }

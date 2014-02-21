@@ -5,3 +5,21 @@
   margin-right: auto;
   border: 1px solid #000;
 }
+.jumbotron {
+  background: none;
+}
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin input.form-control {
+  margin-top: 10px;
+}
+.form-signin label.remember {
+  float: right;
+}
+.form-signin a.sign-up {
+  top: 10px;
+  position: relative;
+}

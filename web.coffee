@@ -1,11 +1,18 @@
 #!/usr/bin/env coffee
-express = require 'express'
-stylus  = require 'stylus'
-nib     = require 'nib'
-routes  = require './routes'
+express  = require 'express'
+passport = require 'passport'
+stylus   = require 'stylus'
+nib      = require 'nib'
+coffee   = require 'coffee-script'
+routes   = require './routes'
 
 # Init app
 app = express()
+
+# Attach middleware to coffeescript
+coffee.middleware = (req, res, next) ->
+  console.log req.url
+  next()
 
 # Init app settings
 app.set 'title', 'CGCU <3s U - Scoreboard'
@@ -19,10 +26,12 @@ app.use stylus.middleware                       # stylus
   dest: "#{__dirname}/public"
   compile: (str, path) -> stylus(str)
     .set('filename', path)
+app.use coffee.middleware
 app.use express.static "#{__dirname}/public"    # static
 
 # Routes for homepage
-app.get '/', routes.home.index
+app.get '/',        routes.home.index
+app.get '/signin',  routes.home.signin
 
 # Configure scores resource routes
 app.get '/scores',      routes.scores.findAll
