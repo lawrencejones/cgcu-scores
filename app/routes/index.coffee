@@ -7,28 +7,36 @@ routeHome = ->
   signin: (req, res) ->
     res.render 'signin', { title: 'Signin' }
 
-routeScores = ->
-  # GET /scores
+routeDept = ->
+
+  # GET /dept
   findAll: (req, res) ->
-    res.send []
+    db.collection 'dept', (err, dept) ->
+      if not err then dept.find {}, (err, cursor) ->
+        cursor.toArray (err, array) ->
+          res.send array
   
-  # GET /scores/:id
-  findById: (req, res) ->
-    res.send
-      id: req.params.id
-      dept: 'Department'
-      score: 1500
+  # GET /dept/:dept
+  findByDept: (req, res) ->
+    db.collection 'dept', (err, dept) ->
+      if not err
+        dept.findOne {dept: req.params.dept}, (err, dept) ->
+          res.send if err then 404 else dept
+        
 
+db = null
 # Takes app and appropriate parameters for route config
-module.exports = (app, db, passport) ->
+module.exports = (app, _db, passport) ->
 
-  home   = do routeHome
-  scores = do routeScores
+  db = _db
+
+  home = do routeHome
+  dept = do routeDept
 
   # Routes for homepage
   app.get '/',            home.index
   app.get '/signin',      home.signin
 
   # Configure scores resource routes
-  app.get '/scores',      scores.findAll
-  app.get '/scores/:id',  scores.findById
+  app.get '/dept',        dept.findAll
+  app.get '/dept/:dept',  dept.findByDept

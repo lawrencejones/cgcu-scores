@@ -1,5 +1,5 @@
-# Seed data for scores
-exports.scores =
+# Seed data for depts
+exports.dept =
 [
   'Aero',    'BioEng',  'ChemEng'
   'CivEng',  'Comp',    'EEEng'

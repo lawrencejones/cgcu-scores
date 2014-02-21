@@ -41,7 +41,7 @@ app.configure 'production', 'development', 'testing', ->
   app.use passport.session()
 
 # Start database
-db = require('./db') config, ['users', 'scores']
+db = require('./db') config, ['users', 'dept']
 
 # Load routes
 (require './routes')(app, db, passport)
