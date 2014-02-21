@@ -4,16 +4,19 @@ block scripts
   script(type='text/javascript', src='web/signin.js')
 
 block signin
-  form.form-signin(role='form')
-    input.form-control(placeholder='Login', autofocus)
-    input.form-control.password(placeholder='Password', required, type='password')
+  form.form-signin(role='form', action='login', method='post')
+    input.form-control(placeholder='Login', name='login', autofocus)
+    input.form-control.password(placeholder='Password', name='pass', required, type='password')
     .row
       .col-md-12
         a.sign-up Sign up
         label.remember.checkbox
           input(type='checkbox', value='remember-me')
           span Remember me
-    button.btn.btn-lg.btn-primary.btn-block(type='submit') Sign in
+    .row
+      .col-md-12
+        button.btn.btn-lg.btn-primary.btn-block(type='submit', value='Submit').
+          #{(flash && flash.error) || "Signin"}
 
 block content
   block signin

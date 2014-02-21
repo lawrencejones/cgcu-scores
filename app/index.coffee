@@ -2,6 +2,7 @@ express  = require 'express'
 passport = require 'passport'
 stylus   = require 'stylus'
 nib      = require 'nib'
+flash    = require 'connect-flash'
 fs       = require 'fs'
 path     = require 'path'
 coffee   = require './midware/cs'
@@ -23,6 +24,8 @@ app.configure 'production', 'development', 'testing', ->
   # Configure middleware
   app.use express.logger('dev')                   # logger
   app.use express.cookieParser()                  # cookie
+  app.use express.bodyParser()                    # params
+  app.use flash()                                 # cflash
   
   # Asset serving
   app.use stylus.middleware                       # stylus
@@ -32,7 +35,7 @@ app.configure 'production', 'development', 'testing', ->
       .set('filename', path)
   app.use coffee.middleware                       # coffee
     src: "#{root_dir}/web"
-  app.use express.static "#{root_dir}/public"    # static
+  app.use express.static "#{root_dir}/public"     # static
   
   # Authentication
   app.use express.session                         # secret

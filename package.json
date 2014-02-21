@@ -11,6 +11,7 @@
     "mongodb": "*",
     "monk": "*",
     "passport": "*",
-    "bcrypt-nodejs": "latest"
+    "bcrypt-nodejs": "latest",
+    "connect-flash": "*"
   }
 }

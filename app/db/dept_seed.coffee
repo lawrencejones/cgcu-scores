@@ -3,5 +3,4 @@ exports.dept =
 [
   'Aero',    'BioEng',  'ChemEng'
   'CivEng',  'Comp',    'EEEng'
-]
-  .map (d) -> {dept: d, score: 0}
+].map (d) -> {dept: d, score: 0}
