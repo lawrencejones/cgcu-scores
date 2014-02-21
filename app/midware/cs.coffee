@@ -14,7 +14,7 @@ exports.middleware = (options) ->
       return if not fname?
       fpath = path.join srcdir, "#{fname}.coffee"
       if fs.existsSync fpath
-        return coffee.compile fs.readFileSync fpath, 'utf8'
+        return coffee.compile (fs.readFileSync fpath, 'utf8'), {bare:true}
   # Return middleware
   (req, res, next) ->
     if (src = getCoffeeSrc req.url)
