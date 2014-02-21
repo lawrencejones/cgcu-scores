@@ -3,6 +3,8 @@ express  = require 'express'
 passport = require 'passport'
 stylus   = require 'stylus'
 nib      = require 'nib'
+fs       = require 'fs'
+path     = require 'path'
 coffee   = require 'coffee-script'
 routes   = require './routes'
 
@@ -10,9 +12,22 @@ routes   = require './routes'
 app = express()
 
 # Attach middleware to coffeescript
-coffee.middleware = (req, res, next) ->
-  console.log req.url
-  next()
+coffee.middleware = (options) ->
+  srcdir = options.src || path.join __dirname, 'app'
+  rexJs  = /^(\/app\/)(\w+).js/
+  # Returns js if corresponding cs src exists and is compileable
+  getCoffeeSrc = (url) ->
+    if url && rexJs.test url
+      fname = (url.match rexJs)[2]
+      return if not fname?
+      fpath = path.join srcdir, "#{fname}.coffee"
+      if fs.existsSync fpath
+        return coffee.compile fs.readFileSync fpath, 'utf8'
+  # Return middleware
+  (req, res, next) ->
+    if (src = getCoffeeSrc req.url)
+      res.send src
+    else next()
 
 # Init app settings
 app.set 'title', 'CGCU <3s U - Scoreboard'
@@ -26,7 +41,8 @@ app.use stylus.middleware                       # stylus
   dest: "#{__dirname}/public"
   compile: (str, path) -> stylus(str)
     .set('filename', path)
-app.use coffee.middleware
+app.use coffee.middleware                       # coffee
+  src: "#{__dirname}/app"
 app.use express.static "#{__dirname}/public"    # static
 
 # Routes for homepage
