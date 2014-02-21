@@ -10,6 +10,7 @@
     "nib": "*",
     "mongodb": "*",
     "monk": "*",
-    "passport": "*"
+    "passport": "*",
+    "bcrypt-nodejs": "latest"
   }
 }
