@@ -43,6 +43,11 @@ app.configure 'production', 'development', 'testing', ->
   app.use passport.initialize()                   # pssprt
   app.use passport.session()
 
+  # To bypass authentication
+  app.use (req, res, next) ->
+    req.session.isAuthed = true
+    next()
+
 # Start database
 db = require('./db') config, ['users', 'dept']
 

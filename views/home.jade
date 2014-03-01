@@ -2,8 +2,22 @@ extend layout
 
 block scripts
   script(type='text/javascript', src='/web/scoreboard.js')
+  - if (sudo)
+    script(type='text/javascript', src='/web/newscore.js')
+
+block modal
+  .modal.fade#new-score
+    .model-dialog
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal', aria-hidden) &times;
+          h4.modal-title Add score
+        .modal-body
+          table.table.table-bordered.text-center.table-hover
+          
 
 block content
   .row
     .col-md-12
-      canvas.chart(width='640', height='400')
+      canvas.chart#scores(width='720', height='440')
+  - if (sudo)

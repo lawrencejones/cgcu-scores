@@ -2,7 +2,10 @@ routeHome = (db, auth) ->
 
   # GET /
   index: (req, res) ->
-    res.render 'home', { title: 'CGCU <3s U' } # render home
+    res.render 'home', {  # render home
+      title: 'CGCU <3s U'
+      sudo: req.session.isAuthed
+    }
   
   # GET /signin
   signin: (req, res) ->
