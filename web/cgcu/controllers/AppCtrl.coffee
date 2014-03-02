@@ -4,6 +4,7 @@ angular.module('cgcu')
     # Initialise
     console.log 'Init AppCtrl'
 
+    $scope.route = 'chart'
 
 
 

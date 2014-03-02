@@ -60,6 +60,9 @@ routeDept = (auth, Dept) ->
 
   # POST /api/dept/:dept/score
   postScore: (req, res) ->
+    console.log req.body
+    res.send 200
+    return
     score = parseInt req.body.score, 10
     query = Dept.find { name: req.params.dept }
     query.exec (err, dept) ->

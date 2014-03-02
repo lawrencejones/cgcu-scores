@@ -3,15 +3,16 @@ extend layout
 block controls
   .row.controls
     .col-xs-6.col-md-6.text-center
-      button.btn.btn-default.btn-lg(ng-click="route = 'chart'") Chart
+      button.btn.btn-lg(ng-click="route = 'chart'", ng-class="{active: route == 'chart'}") Chart
     .col-xs-6.col-md-6.text-center
-      button.btn.btn-default.btn-lg(ng-click="route = 'scoreboard'") Scoreboard
+      button.btn.btn-lg(ng-click="route = 'scoreboard'", ng-class="{active: route == 'scoreboard'}") Scoreboard
 
 
 block views
   .row(ng-switch, on='route')
     .col-md-12(ng-switch-when='chart')
-      .chart#scores(style='width:740px;height:460px')
+      .buffer
+        .chart#scores(style='width:740px;height:460px')
     .col-md-12(ng-switch-when='scoreboard')
       h1 Scoreboard
 
