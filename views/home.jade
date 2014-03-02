@@ -1,23 +1,25 @@
 extend layout
 
-block scripts
-  script(type='text/javascript', src='/web/scoreboard.js')
-  - if (sudo)
-    script(type='text/javascript', src='/web/newscore.js')
+block controls
+  .row.controls
+    .col-xs-6.col-md-6.text-center
+      button.btn.btn-default.btn-lg(ng-click="route = 'chart'") Chart
+    .col-xs-6.col-md-6.text-center
+      button.btn.btn-default.btn-lg(ng-click="route = 'scoreboard'") Scoreboard
 
-block modal
-  .modal.fade#new-score
-    .model-dialog
-      .modal-content
-        .modal-header
-          button.close(type='button', data-dismiss='modal', aria-hidden) &times;
-          h4.modal-title Add score
-        .modal-body
-          table.table.table-bordered.text-center.table-hover
-          
+
+block views
+  .row(ng-switch, on='route')
+    .col-md-12(ng-switch-when='chart')
+      .chart#scores(style='width:740px;height:460px')
+    .col-md-12(ng-switch-when='scoreboard')
+      h1 Scoreboard
 
 block content
-  .row
-    .col-md-12
-      canvas.chart#scores(width='720', height='440')
-  - if (sudo)
+  .container
+    .row
+      .col-md-12
+        block controls
+        hr
+        block views
+

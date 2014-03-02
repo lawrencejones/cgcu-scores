@@ -1,0 +1,41 @@
+chart = null
+
+fetchAndPlot = (chart, interval) ->
+  console.log 'Fetching new data'
+  $.get '/dept', (dept) ->
+    console.log 'Plotting fetched data'
+
+    window.dept = dept # make globally available
+    maxScore = Math.max (scores = (d.score for d in dept))...
+    inc   = Math.max 10, Math.floor(maxScore/100)*10
+    steps = Math.floor(1.1*maxScore/inc) + 1
+
+    data   = ([[i, d.score]] for d,i in dept)
+    labels = (d.dept for d in dept)
+
+    options =
+      xaxis:
+        tickLength: 0
+        tickFormatter: (x) -> labels[x]
+        min: -0.5, max: dept.length - 0.5
+        tickSize: 1
+      yaxis:
+        tickLength: 0
+      bars:
+        show: true
+        align: 'center'
+        barWidth: 0.5
+      grid:
+        borderWidth:
+          top: 0, right: 0
+          bottom: 1, left: 1
+      colors: [
+        '#314043', '#3FB8CD', '#9AD74C'
+        '#FBA44F', '#EE5E91', '#F46040'
+      ]
+
+    chart = $.plot $('#scores'), data, options
+
+$ -> do fetchAndPlot
+
+

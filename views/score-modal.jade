@@ -1,0 +1,31 @@
+mixin score
+  .score-input(ng-show="stage == 'score'")
+    h1 Score
+    table.table.table-bordered.text-center.table-hover
+      tbody
+        tr(ng-repeat='s in scores')
+          td(ng-click='setScore(s)') {{ s }}
+
+mixin dept
+  .dept-input(ng-show="stage == 'dept'")
+    h1 Dept
+    table.table.table-bordered.text-center.table-hover
+      tbody
+        tr(ng-repeat='d in depts')
+          td(ng-click='setDept(d)') {{ d.name }}
+
+mixin login
+  .score-login(ng-show="stage == 'login'")
+    h1 Login
+    input(type='text', placeholder='College Login', ng-model='input.login')
+
+.modal#new-score
+  .model-dialog
+    .modal-content(ng-controller='NewScoreCtrl')
+      .modal-body
+        mixin score
+        mixin dept
+        mixin login
+
+
+

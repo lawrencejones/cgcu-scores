@@ -40,3 +40,11 @@
   font-weight: bold;
   cursor: pointer;
 }
+img.logo {
+  width: 300px;
+  height: 330px;
+}
+.controls button.btn {
+  border: none;
+  width: 100%;
+}

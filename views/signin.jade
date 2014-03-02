@@ -1,22 +1,18 @@
 extend layout
-
-block scripts
-  script(type='text/javascript', src='web/signin.js')
-
-block signin
-  form.form-signin(role='form', action='login', method='post')
+block content
+  form.form-signin(role='form', signin-form)
     input.form-control(placeholder='Login', name='login', autofocus)
-    input.form-control.password(placeholder='Password', name='pass', required, type='password')
+    input.form-control(placeholder='Password', name='pass', type='password')
     .row
       .col-md-12
-        a.sign-up Sign up
+        a.sign-up Help?
         label.remember.checkbox
-          input(type='checkbox', value='remember-me')
+          input(type='checkbox', name='rememberme')
           span Remember me
     .row
       .col-md-12
-        button.btn.btn-lg.btn-primary.btn-block(type='submit', value='Submit').
-          #{(flash && flash.error) || "Signin"}
+        button.btn.btn-lg.btn-primary.btn-block.
+          #{(flash && flash.error) || "Submit"}
 
 block content
   block signin

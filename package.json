@@ -8,7 +8,7 @@
     "jade": "*",
     "stylus": "*",
     "nib": "*",
-    "mongodb": "*",
+    "mongoose": "*",
     "monk": "*",
     "passport": "*",
     "bcrypt-nodejs": "latest",

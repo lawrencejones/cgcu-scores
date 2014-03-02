@@ -1,11 +1,12 @@
 express  = require 'express'
 passport = require 'passport'
-stylus   = require 'stylus'
 nib      = require 'nib'
 flash    = require 'connect-flash'
 fs       = require 'fs'
 path     = require 'path'
 coffee   = require './midware/cs'
+stylus   = require './midware/stylus'
+ngget    = require './midware/angular'
 
 # Init app
 app = express()
@@ -24,36 +25,31 @@ app.configure 'production', 'development', 'testing', ->
   # Configure middleware
   app.use express.logger('dev')                   # logger
   app.use express.cookieParser()                  # cookie
+  app.use express.session                         # secret
+    secret: 'mysecret'
   app.use express.bodyParser()                    # params
   app.use flash()                                 # cflash
   
   # Asset serving
-  app.use stylus.middleware                       # stylus
-    src: "#{root_dir}/stylesheets"
-    dest: "#{root_dir}/public"
-    compile: (str, path) -> stylus(str)
-      .set('filename', path)
-  app.use coffee.middleware                       # coffee
-    src: "#{root_dir}/web"
-  app.use express.static "#{root_dir}/public"     # static
+  app.use stylus.middleware root_dir              # stylus
+  app.use coffee.middleware root_dir              # coffee
+  app.use express.static(                         # static
+    path.join root_dir, 'public')
   
   # Authentication
-  app.use express.session                         # secret
-    secret: 'thisismyappsecret'
   app.use passport.initialize()                   # pssprt
-  app.use passport.session()
 
-  # To bypass authentication
-  app.use (req, res, next) ->
-    req.session.isAuthed = true
-    next()
+  # Concatenates all coffeescript for webapp
+  app.get '/app.js', ngget
+    angularPath: path.join root_dir, 'web'
 
 # Start database
-db = require('./db') config, ['users', 'dept']
+db = require './db'
+
+# Load app
+server = app.listen (PORT = process.env.PORT || 80), ->
+  console.log "Listening at localhost:#{PORT}"
 
 # Load routes
 (require './routes')(app, db, passport)
-
-# Export the app
-module.exports = app
 

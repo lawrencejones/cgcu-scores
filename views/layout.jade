@@ -4,15 +4,19 @@ html
     title #{title}
     link(rel='stylesheet', href='/lib/bootstrap-3.1.1.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css')
     script(src='lib/jquery-2.1.0.js')
     script(src='lib/bootstrap-3.1.1.min.js')
-    script(src='lib/chart.js')
-  body
-    //- Heading block "CGCU <3's U"
+    script(src='lib/jquery.flot.min.js')
+    script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.min.js')
+    script(src='//cdnjs.cloudflare.com/ajax/libs/angular-strap/2.0.0-rc.1/angular-strap.min.js')
+    script(src='app.js')
+  body(ng-app='cgcu', ng-controller='AppCtrl')
     .jumbotron.text-center
-      h1 CGCU &lt;3s U
-      p.lead Scoreboard signin
-    block append modal
+      - if (sudo)
+        img.logo(src='/img/logo.png', bs-modal='modal', data-template='/partials/score-modal')
+      - else
+        img.logo(src='/img/logo.png')
     block append content
     block append scripts
 
