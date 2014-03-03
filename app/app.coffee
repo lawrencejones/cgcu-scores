@@ -10,7 +10,7 @@ ngget    = require './midware/angular'
 
 # Init app
 app = express()
-root_dir = path.join __dirname, '..'
+root_dir = path.join (__dirname || process.cwd()), '..'
 
 # Configure app
 config = require './config'
