@@ -18,6 +18,7 @@
     "mongoose": "*",
     "passport": "*",
     "bcrypt-nodejs": "latest",
+    "nodetime": "*",
     "connect-flash": "*"
   }
 }

@@ -8,6 +8,12 @@ coffee   = require './midware/cs'
 stylus   = require './midware/stylus'
 ngget    = require './midware/angular'
 
+# Configure for nodetime in production
+if process.env.NODETIME_ACCOUNT_KEY
+  require('nodetime').profile
+    accountKey: process.env.NODETIME_ACCOUNT_KEY
+    appName: 'City & Guilds Week'
+
 # Init app
 app = express()
 root_dir = path.join (__dirname || process.cwd()), '..'
