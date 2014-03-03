@@ -9,10 +9,13 @@ OUT_DIR  := target
 SRC := $(shell find app -name "*.coffee")
 LIB := $(SRC:$(SRC_DIR)/%.coffee=$(OUT_DIR)/%.js)
 
+# Web assets
+WEB := web/modules.coffee $(shell find web -name "*.coffee")
+
 .PHONY: all clean rebuild
 
 # Phony all target
-all: target $(LIB)
+all: target $(LIB) public/js/app.js
 	@-echo "Finished building cgcu"
 
 # Make target folder if doesn't exist
@@ -28,6 +31,11 @@ clean:
 
 # Phony rebuild target
 rebuild: clean all
+
+# Compile web assets
+public/js/app.js: $(WEB)
+	@-echo "Compiling web asset $@"
+	@$(COFFEE) -cj $@ $^
 
 # Rule for all other coffee files
 $(OUT_DIR)/%.js: $(SRC_DIR)/%.coffee

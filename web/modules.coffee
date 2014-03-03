@@ -1,3 +1,4 @@
 # Create the angular module
-cgcu = angular.module 'cgcu', ['mgcrea.ngStrap']
+if not angular.module('cgcu')
+  angular.module 'cgcu', ['mgcrea.ngStrap']
 

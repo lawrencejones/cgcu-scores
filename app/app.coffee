@@ -40,7 +40,8 @@ app.configure 'production', 'development', 'testing', ->
   app.use passport.initialize()                   # pssprt
 
   # Concatenates all coffeescript for webapp
-  app.get '/app.js', ngget
+  # Should not be required if on production.
+  app.get '/js/app.js', ngget
     angularPath: path.join root_dir, 'web'
 
 # Start database
