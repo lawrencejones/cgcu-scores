@@ -8,11 +8,19 @@ userSchema = mongoose.Schema
   admin:      Boolean
   points:     Number
 
+admins =
+  [
+    'lmj112',  'jmm311',  'dyl111'
+    'lc3310',  'tm1911',  'cac111'
+    'gp711'
+  ]
+
 User = mongoose.model 'User', userSchema
 User.find {}, (err, users) ->
-  if users.length == 0
-    [
-      'lmj112'
-    ].map (l) -> User.create { login: l, pass: '', admin: true, points: 0 }
+  admins.map (l) ->
+    User.findOne({ login: l }).exec (err, user) ->
+      if not user?
+        User.create { login: l, pass: '', admin: true, points: 0 }
+      else user.admin = true; user.save()
 
 module.exports = User
