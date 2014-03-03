@@ -18,7 +18,6 @@ all: $(LIB)
 # Make target folder if doesn't exist
 target:
 	@mkdir target
-	@echo "*\n!.gitignore" > target/.gitignore
 
 # Phony clean target
 clean:
