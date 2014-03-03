@@ -26,7 +26,7 @@ app.configure 'production', 'development', 'testing', ->
   app.use express.logger('dev')                   # logger
   app.use express.cookieParser()                  # cookie
   app.use express.session                         # secret
-    secret: 'mysecret'
+    secret: 'huiwedh802h9#ji21jioio'
   app.use express.bodyParser()                    # params
   app.use flash()                                 # cflash
   
