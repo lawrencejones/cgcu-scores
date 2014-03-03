@@ -15,6 +15,11 @@ LIB := $(SRC:$(SRC_DIR)/%.coffee=$(OUT_DIR)/%.js)
 all: $(LIB)
 	@-echo "Finished building cgcu"
 
+# Make target folder if doesn't exist
+target:
+	@mkdir target
+	@echo "*\n!.gitignore" > target/.gitignore
+
 # Phony clean target
 clean:
 	@-echo "Cleaning *.js files"
