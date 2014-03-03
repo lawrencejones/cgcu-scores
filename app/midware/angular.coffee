@@ -12,7 +12,7 @@ globCoffee = (dpath) ->
     fpath = path.join dpath, fpath
     if fs.statSync(fpath).isDirectory()
       rexedFiles.push globCoffee fpath
-    else if /^(.+)\.coffee$/.test fpath
+    else if /^(.+)\.(coffee|js)$/.test fpath
       rexedFiles.push fpath
   [].concat.apply [], rexedFiles
 
