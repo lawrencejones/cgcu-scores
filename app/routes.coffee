@@ -18,7 +18,11 @@ routeUser = (auth, User) ->
   getAdmins: (req, res) ->
     User.find({admin: true}).exec (err, admins) ->
       if err then return res.send 500
-      res.send (a.login for a in admins when a.pass and a.pass != '')
+      [pending, conf] = admins.reduce ((a,c) ->
+        a[+(c.pass? and c.pass != '')].push c.login; a), [[],[]]
+      res.send
+        conf:     conf
+        pending:  pending
 
   # GET /users
   getUsers: (req, res) ->
