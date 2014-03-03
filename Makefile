@@ -12,11 +12,12 @@ LIB := $(SRC:$(SRC_DIR)/%.coffee=$(OUT_DIR)/%.js)
 .PHONY: all clean rebuild
 
 # Phony all target
-all: $(LIB)
+all: target $(LIB)
 	@-echo "Finished building cgcu"
 
 # Make target folder if doesn't exist
 target:
+	@echo Making target dir
 	@mkdir target
 	@echo "*\n!.gitignore" > target/.gitignore
 
