@@ -37,5 +37,10 @@ angular.module('cgcu')
 
         chart = $.plot $elem, data, options
 
-      Dept.get (depts) ->
+      # Handle for replotting the graph
+      refresh = (depts) ->
         plot (d for n,d of depts)
+
+      # Register refresh to be called every time updated
+      Dept.register refresh
+

@@ -9,7 +9,7 @@ block controls
 
 
 block views
-  .row(ng-switch, on='route')
+  .row.view-switch(ng-switch, on='route')
     .col-md-12(ng-switch-when='chart')
       .buffer
         .chart#scores(style='width:740px;height:460px')

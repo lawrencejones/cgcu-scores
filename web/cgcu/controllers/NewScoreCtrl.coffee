@@ -1,15 +1,17 @@
 angular.module('cgcu')
-  .controller 'NewScoreCtrl', ($scope, $rootScope, Dept) ->
+  .controller 'NewScoreCtrl', ($scope, User, Dept) ->
 
     console.log 'Init NewScoreCtrl'
 
     angular.extend $scope, {
       stage: 'score'
       scores: [1..5].map (s) -> 10*s
-      depts: Dept.depts
       input:
         score: 0, login: '', dept: ''
     }
+
+    Dept.register (depts) ->
+      $scope.depts = (d for k,d of depts)
 
     $scope.setScore = (score) ->
       $scope.input.score = parseInt score, 10
