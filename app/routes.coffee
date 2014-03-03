@@ -12,6 +12,14 @@ routeHome = (auth, User) ->
       title: 'Signin'
       lash: req.session.flash
 
+routeUser = (auth, User) ->
+
+  # GET /admins
+  getAdmins: (req, res) ->
+    User.find({admin: true}).exec (err, admins) ->
+      if err then return res.send 500
+      res.send (a.login for a in admins when a.pass and a.pass != '')
+
   # GET /users
   getUsers: (req, res) ->
     User.find({}).exec (err, users) ->
@@ -117,6 +125,7 @@ module.exports = (app, db, passport) ->
   authme = auth.authme
 
   home = routeHome auth, db.models.User
+  user = routeUser auth, db.models.User
   dept = routeDept auth, db.models.Dept, db.models.User
   dev  = routeDev        db.models.Dept, db.models.User
 
@@ -127,8 +136,11 @@ module.exports = (app, db, passport) ->
   # Routes for homepage
   app.get  '/',           home.index
   app.get  '/signin',     home.signin
-  app.get '/users',       home.getUsers
-  app.post '/login',      home.login
+
+  # Routes for users
+  app.get  '/users',      user.getUsers
+  app.get  '/admins',     user.getAdmins
+  app.post '/login',      user.login
 
   # Routes for dev only
   # Do NOT publish to production
