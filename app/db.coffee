@@ -2,7 +2,7 @@ fs = require 'fs'
 path = require 'path'
 # Require mongoose
 mongoose = require 'mongoose'
-mongoose.connect process.env.MONGOHQ_URL || 'mongodb://localhost/cgcudb'
+mongoose.connect process.env.MONGOLAB_URI || 'mongodb://localhost/cgcudb'
 
 # Reference connection
 db = mongoose.connection
