@@ -16,11 +16,16 @@ angular.module('cgcu')
       $scope.stage = 'dept'
 
     $scope.setDept = (dept) ->
-      $scope.input.dept = dept
+      $scope.input.dept = dept.name
       $scope.stage = 'login'
 
     $scope.submit = ->
       console.log 'Submitting new score'
-      console.log $scope.input
+      $.ajax
+        url: '/api/score'
+        method: 'POST'
+        data: $scope.input
+        success: (data) ->
+          console.log data
 
 

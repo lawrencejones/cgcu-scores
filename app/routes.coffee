@@ -2,14 +2,15 @@ routeHome = (auth, User) ->
 
   # GET /
   index: (req, res) ->
-    res.render 'home', {  # render home
+    res.render 'home',  # render home
       title: 'CGCU <3s U'
-      sudo: true || req.session.isAuthed
-    }
+      sudo: req.session.isAuthed
   
   # GET /signin
   signin: (req, res) ->
-    res.render 'signin', { title: 'Signin', flash: req.session.flash }
+    res.render 'signin',
+      title: 'Signin'
+      lash: req.session.flash
 
   # POST /login (?login=<login>&pass=<pass>)
   login: (req, res) ->
@@ -41,7 +42,7 @@ routeDev = (User) ->
       process.exit 0
 
 
-routeDept = (auth, Dept) ->
+routeDept = (auth, Dept, User) ->
 
   # GET /api/dept
   findAll: (req, res) ->
@@ -58,21 +59,25 @@ routeDept = (auth, Dept) ->
       else
         res.send dept
 
-  # POST /api/dept/:dept/score
+  # POST /api/score
   postScore: (req, res) ->
-    console.log req.body
-    res.send 200
-    return
-    score = parseInt req.body.score, 10
-    query = Dept.find { name: req.params.dept }
-    query.exec (err, dept) ->
-      if err then res.send 500
-      else
-        dept.score += score
-        dept.save (err) ->
-          if err then res.send 500
-          else
-            res.send 200
+    deptQuery = { name: req.body.dept }
+    deptUpdate = { $inc: { score: req.body.score } }
+    req.body.score = parseInt req.body.score, 10
+    Dept.update deptQuery, deptUpdate, (err, num) ->
+      if err then return res.send 500
+      console.log "Updated #{num} depts"
+      User.findOne { login: req.body.login }, (err, user) ->
+        if err then return res.send 500
+        if not user?
+          User.create
+            login: req.body.login
+            admin: false
+            points: req.body.score
+        else
+          user.points += req.body.score
+          user.save()
+        res.send 200
 
   # DELETE /api/dept/:dept/score
   clearScore: (req, res) ->
@@ -98,7 +103,7 @@ module.exports = (app, db, passport) ->
   authme = auth.authme
 
   home = routeHome auth, db.models.User
-  dept = routeDept auth, db.models.Dept
+  dept = routeDept auth, db.models.Dept, db.models.User
   dev  = routeDev        db.models.User
 
   # General partial route
@@ -119,7 +124,7 @@ module.exports = (app, db, passport) ->
   # Configure scores resource routes
   app.get     '/api/dept',                      dept.findAll
   app.get     '/api/dept/:dept',                dept.findByDept
-  app.post    '/api/dept/:dept/score',  authme, dept.postScore
+  app.post    '/api/score',             authme, dept.postScore
   app.delete  '/api/dept/:dept/score',  authme, dept.clearScore
   app.delete  '/api/reset',             authme, dept.resetScores
 

@@ -14,6 +14,7 @@ module.exports = (User) ->
   _exports.authenticate = (login, pass, success, fail) ->
     User.findOne({ login: login }).exec (err, user) ->
       if err or !user? then return do fail
+      if not user.admin then return do fail
       if user.pass == '' # then default user, allow set password
         user.salt = bcrypt.genSaltSync 8
         user.pass = hash_pass pass, user.salt

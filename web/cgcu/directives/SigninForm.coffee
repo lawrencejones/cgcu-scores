@@ -1,6 +1,6 @@
 angular.module('cgcu').directive 'signinForm', ->
   restrict: 'A'
-  link: (scope, $elem, attr) ->
+  link: ($scope, $elem, attr) ->
     $elem.find('button:eq(0)').click ->
       $.ajax
         url: '/login'
@@ -11,6 +11,7 @@ angular.module('cgcu').directive 'signinForm', ->
         success: (user) ->
           sessionStorage.uid = user._id
           window.location.href = '/'
+          if not $scope.$$phase? then $scope.$apply()
         error: ->
           $elem
             .find('button.btn.btn-block')
