@@ -3,7 +3,7 @@ routeHome = (auth, User) ->
   # GET /
   index: (req, res) ->
     res.render 'home',  # render home
-      title: 'CGCU <3s U'
+      title: 'City & Guilds Week'
       sudo: req.session.isAuthed
   
   # GET /signin
