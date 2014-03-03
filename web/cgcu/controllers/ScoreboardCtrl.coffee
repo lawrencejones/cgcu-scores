@@ -14,7 +14,6 @@ angular.module('cgcu')
       users = ({login:l, points:u.points} for l,u of $scope.users)
         .sort (a,b) ->
           b.points - a.points
-      console.log users
       usersCache[$scope.users] = users
 
     User.register (users) ->

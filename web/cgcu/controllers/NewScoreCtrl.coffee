@@ -6,12 +6,10 @@ angular.module('cgcu')
     angular.extend $scope, {
       stage: 'score'
       scores: [1..5].map (s) -> 10*s
+      depts: Dept.data
       input:
         score: 0, login: '', dept: ''
     }
-
-    Dept.register (depts) ->
-      $scope.depts = (d for k,d of depts)
 
     $scope.setScore = (score) ->
       $scope.input.score = parseInt score, 10
@@ -29,5 +27,7 @@ angular.module('cgcu')
         data: $scope.input
         success: (data) ->
           if $scope.$modal then $scope.$modal.hide()
+          User.refresh()
+          Dept.refresh()
 
 

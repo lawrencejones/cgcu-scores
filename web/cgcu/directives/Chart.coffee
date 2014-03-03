@@ -5,6 +5,7 @@ angular.module('cgcu')
 
       plot = (depts) ->
 
+        console.log 'Replot!!!'
         maxScore = Math.max (scores = (d.score for d in depts))...
 
         inc   = Math.max 10, Math.floor(maxScore/100)*10
