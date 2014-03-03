@@ -31,10 +31,10 @@ app.configure 'production', 'development', 'testing', ->
   app.use flash()                                 # cflash
   
   # Asset serving
-  app.use stylus.middleware root_dir              # stylus
-  app.use coffee.middleware root_dir              # coffee
   app.use express.static(                         # static
     path.join root_dir, 'public')
+  app.use stylus.middleware root_dir              # stylus
+  app.use coffee.middleware root_dir              # coffee
   
   # Authentication
   app.use passport.initialize()                   # pssprt
