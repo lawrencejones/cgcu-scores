@@ -5,13 +5,17 @@ deptSchema = mongoose.Schema
   name:      String
   score:     Number
 
+depts =
+  [
+    'Aero', 'BioEng', 'ChemEng', 'MechEng'
+    'CivEng', 'Comp', 'EEEng'
+  ]
+
 Dept = mongoose.model 'Dept', deptSchema
-Dept.find {}, (err, depts) ->
-  if depts.length == 0
-    [
-      'Aero', 'BioEng', 'ChemEng'
-      'CivEng', 'Comp', 'EEEng'
-    ].map (d) -> Dept.create { name: d, score: 0 }
+depts.map (d) ->
+  Dept.findOne({ name: d }).exec (err, dept) ->
+    if not dept?
+      Dept.create { name: d, score: 0 }
 
 module.exports = Dept
 

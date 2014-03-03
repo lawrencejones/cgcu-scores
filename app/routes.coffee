@@ -37,9 +37,9 @@ routeHome = (auth, User) ->
     auth.authenticate login, pass, success, fail
 
 
-routeDev = (User) ->
+routeDev = (Dept, User) ->
 
-  # GET /users
+  # GET /dev/users
   # Dev only
   getUsers: (req, res) ->
     User.find({}).exec (err, users) ->
@@ -47,11 +47,18 @@ routeDev = (User) ->
       else
         res.send users
 
-  # DELETE /users
+  # DELETE /dev/users
   # Dev only
   deleteUsers: (req, res) ->
     User.remove {}, (err) ->
       process.exit 0
+
+  # DELETE /dev/reset
+  resetScores: (req, res) ->
+    Dept.update {}, { score: 0 }, { multi: true }, (err, num) ->
+      if err then res.send 500
+      else
+        res.send { num: num }
 
 
 routeDept = (auth, Dept, User) ->
@@ -100,12 +107,6 @@ routeDept = (auth, Dept, User) ->
       else
         res.send { num: num }
 
-  # DELETE /api/reset
-  resetScores: (req, res) ->
-    Dept.update {}, { score: 0 }, { multi: true }, (err, num) ->
-      if err then res.send 500
-      else
-        res.send { num: num }
 
 
 # Takes app and appropriate parameters for route config
@@ -116,7 +117,7 @@ module.exports = (app, db, passport) ->
 
   home = routeHome auth, db.models.User
   dept = routeDept auth, db.models.Dept, db.models.User
-  dev  = routeDev        db.models.User
+  dev  = routeDev        db.models.Dept, db.models.User
 
   # General partial route
   app.get '/partials/:name', (req, res) ->
@@ -133,11 +134,11 @@ module.exports = (app, db, passport) ->
   if app.settings.env == 'development'
     app.get    '/dev/users',    dev.getUsers
     app.delete '/dev/users',    dev.deleteUsers
+    app.delete '/dev/reset',    dev.resetScores
 
   # Configure scores resource routes
   app.get     '/api/dept',                      dept.findAll
   app.get     '/api/dept/:dept',                dept.findByDept
   app.post    '/api/score',             authme, dept.postScore
   app.delete  '/api/dept/:dept/score',  authme, dept.clearScore
-  app.delete  '/api/reset',             authme, dept.resetScores
 
