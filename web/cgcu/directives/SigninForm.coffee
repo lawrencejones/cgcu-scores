@@ -3,7 +3,7 @@ angular.module('cgcu').directive 'signinForm', ->
   link: ($scope, $elem, attr) ->
     $elem.find('button:eq(0)').click ->
       $.ajax
-        url: '/login'
+        url: '/api/login'
         method: 'POST'
         data:
           login: $elem.find('input[name=login]').val()

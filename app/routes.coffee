@@ -14,7 +14,7 @@ routeHome = (auth, User) ->
 
 routeUser = (auth, User) ->
 
-  # GET /admins
+  # GET /api/admins
   getAdmins: (req, res) ->
     User.find({admin: true}).exec (err, admins) ->
       if err then return res.send 500
@@ -24,7 +24,7 @@ routeUser = (auth, User) ->
         conf:     conf
         pending:  pending
 
-  # GET /users
+  # GET /api/users
   getUsers: (req, res) ->
     User.find({}).exec (err, users) ->
       if err then res.send 500
@@ -36,7 +36,7 @@ routeUser = (auth, User) ->
             points: u.points
         res.send response
 
-  # POST /login (?login=<login>&pass=<pass>)
+  # POST /api/login (?login=<login>&pass=<pass>)
   login: (req, res) ->
     login = req.body.login?.toLowerCase()
     pass = req.body.pass
@@ -142,16 +142,16 @@ module.exports = (app, db, passport) ->
   app.get  '/signin',     home.signin
 
   # Routes for users
-  app.get  '/users',      user.getUsers
-  app.get  '/admins',     user.getAdmins
-  app.post '/login',      user.login
+  app.get   '/api/users',      user.getUsers
+  app.get   '/api/admins',     user.getAdmins
+  app.post  '/api/login',      user.login
 
   # Routes for dev only
   # Do NOT publish to production
   if app.settings.env == 'development'
-    app.get    '/dev/users',    dev.getUsers
-    app.delete '/dev/users',    dev.deleteUsers
-    app.delete '/dev/reset',    dev.resetScores
+    app.get     '/dev/users',    dev.getUsers
+    app.delete  '/dev/users',    dev.deleteUsers
+    app.delete  '/dev/reset',    dev.resetScores
 
   # Configure scores resource routes
   app.get     '/api/dept',                      dept.findAll
