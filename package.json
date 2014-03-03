@@ -12,6 +12,7 @@
     "jade": "*",
     "stylus": "*",
     "nib": "*",
+    "coffee-script": "*",
     "mongoose": "*",
     "passport": "*",
     "bcrypt-nodejs": "latest",
