@@ -3,13 +3,16 @@
   "description": "Webapp to track cgcu <3 u week scores",
   "version": "0.0.1",
   "private": true,
+  "scripts": {
+    "start": "node target/app.js",
+    "prepublish": "make all"
+  },
   "dependencies": {
     "express": "3.x",
     "jade": "*",
     "stylus": "*",
     "nib": "*",
     "mongoose": "*",
-    "monk": "*",
     "passport": "*",
     "bcrypt-nodejs": "latest",
     "connect-flash": "*"

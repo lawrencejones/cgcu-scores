@@ -13,7 +13,7 @@ LIB := $(SRC:$(SRC_DIR)/%.coffee=$(OUT_DIR)/%.js)
 
 # Phony all target
 all: $(LIB)
-	@-echo "Finished building footsy"
+	@-echo "Finished building cgcu"
 
 # Phony clean target
 clean:
