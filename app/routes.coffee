@@ -26,7 +26,8 @@ routeHome = (auth, User) ->
 
   # POST /login (?login=<login>&pass=<pass>)
   login: (req, res) ->
-    [login, pass] = [req.body.login, req.body.pass]
+    login = req.body.login?.toLowerCase()
+    pass = req.body.pass
     req.session.isAuthed = false
     success = (uid) ->
       req.session.isAuthed = true
