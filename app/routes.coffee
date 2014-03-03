@@ -18,7 +18,7 @@ routeHome = (auth, User) ->
       if err then res.send 500
       else
         response = []
-        for u in (u for u in users when u.points?)
+        for u in (u for u in users when u.points? and u.points > 0)
           response.push
             login: u.login
             points: u.points

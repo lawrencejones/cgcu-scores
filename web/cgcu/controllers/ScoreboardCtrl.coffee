@@ -10,7 +10,8 @@ angular.module('cgcu')
         usersCache[_u] = null
         unreg()
 
-      users = ({login:l, points:p} for l,p of $scope.users)
+      users = ({login:l, points:p} for l,p of $scope.users).sort (a,b) ->
+        b.points - a.points
       usersCache[$scope.users] = users
 
     User.get (users) ->

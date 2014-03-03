@@ -29,20 +29,21 @@ app.configure 'production', 'development', 'testing', ->
     secret: 'huiwedh802h9#ji21jioio'
   app.use express.bodyParser()                    # params
   app.use flash()                                 # cflash
+
+  # Live compilation, shouldn't be used in production
+  if app.settings.env == 'development'
+    app.get '/js/app.js', ngget                     # app.js
+      angularPath: path.join root_dir, 'web'
+    app.use stylus.middleware root_dir              # stylus
+    app.use coffee.middleware root_dir              # coffee
   
   # Asset serving
   app.use express.static(                         # static
     path.join root_dir, 'public')
-  app.use stylus.middleware root_dir              # stylus
-  app.use coffee.middleware root_dir              # coffee
   
   # Authentication
   app.use passport.initialize()                   # pssprt
 
-  # Concatenates all coffeescript for webapp
-  # Should not be required if on production.
-  app.get '/js/app.js', ngget
-    angularPath: path.join root_dir, 'web'
 
 # Start database
 db = require './db'
