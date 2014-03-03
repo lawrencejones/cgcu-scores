@@ -12,6 +12,18 @@ routeHome = (auth, User) ->
       title: 'Signin'
       lash: req.session.flash
 
+  # GET /users
+  getUsers: (req, res) ->
+    User.find({}).exec (err, users) ->
+      if err then res.send 500
+      else
+        response = []
+        for u in (u for u in users when u.points?)
+          response.push
+            login: u.login
+            points: u.points
+        res.send response
+
   # POST /login (?login=<login>&pass=<pass>)
   login: (req, res) ->
     [login, pass] = [req.body.login, req.body.pass]
@@ -113,6 +125,7 @@ module.exports = (app, db, passport) ->
   # Routes for homepage
   app.get  '/',           home.index
   app.get  '/signin',     home.signin
+  app.get '/users',       home.getUsers
   app.post '/login',      home.login
 
   # Routes for dev only

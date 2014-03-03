@@ -15,7 +15,7 @@ html
     .jumbotron.text-center
       - if (sudo)
         i.fa.fa-lock.fa-lg.admin-lock
-        img.logo(src='/img/logo.png', bs-modal='modal', data-template='/partials/score-modal')
+        img.logo(src='/img/logo.png', new-score-trigger)
       - else
         img.logo(src='/img/logo.png')
     block append content

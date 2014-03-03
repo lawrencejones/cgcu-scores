@@ -1,5 +1,5 @@
 angular.module('cgcu')
-  .controller 'NewScoreCtrl', ($scope, Dept) ->
+  .controller 'NewScoreCtrl', ($scope, $rootScope, Dept) ->
 
     console.log 'Init NewScoreCtrl'
 
@@ -26,6 +26,6 @@ angular.module('cgcu')
         method: 'POST'
         data: $scope.input
         success: (data) ->
-          console.log data
+          if $scope.$modal then $scope.$modal.hide()
 
 

@@ -14,7 +14,15 @@ block views
       .buffer
         .chart#scores(style='width:740px;height:460px')
     .col-md-12(ng-switch-when='scoreboard')
-      h1 Scoreboard
+      .buffer(ng-controller='ScoreboardCtrl')
+        table.table.table-bordered.score-table
+          tbody
+            tr
+              th.lead(colspan=2) Top 30 logins...
+            tr(ng-repeat='user in orderedUsers()')
+              td.login {{ user.login }}
+              td.points {{ user.points }}
+
 
 block content
   .container
