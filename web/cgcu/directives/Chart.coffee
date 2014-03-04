@@ -34,6 +34,7 @@ angular.module('cgcu')
           colors: [
             '#314043', '#3FB8CD', '#9AD74C'
             '#FBA44F', '#EE5E91', '#F46040'
+            '#490A3D'
           ]
 
         chart = $.plot $elem, data, options
