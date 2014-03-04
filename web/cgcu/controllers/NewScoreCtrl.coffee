@@ -22,6 +22,7 @@ angular.module('cgcu')
 
     $scope.submit = ->
       console.log 'Submitting new score'
+      if $scope.waiting then return
       $scope.waiting = true
       setTimeout (-> $scope.waiting = false), 3000
       $.ajax
