@@ -7,6 +7,7 @@ angular.module('cgcu')
       stage: 'score'
       scores: [1..5].map (s) -> 10*s
       depts: Dept.data
+      waiting: false
       input:
         score: 0, login: '', dept: ''
     }
@@ -21,6 +22,8 @@ angular.module('cgcu')
 
     $scope.submit = ->
       console.log 'Submitting new score'
+      $scope.waiting = true
+      setTimeout (-> $scope.waiting = false), 3000
       $.ajax
         url: '/api/score'
         method: 'POST'

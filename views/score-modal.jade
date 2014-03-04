@@ -24,7 +24,7 @@ mixin login
       strong {{ input.dept }}
       | on behalf of...
     input.input-lg.form-control(type='text', placeholder='College Login', ng-model='input.login')
-    button.btn.btn-primary.btn-lg(ng-click='submit()', ng-class="{disabled: input.login.length == 0}") Submit
+    button.btn.btn-primary.btn-lg(ng-click='submit()', ng-class="{disabled: input.login.length == 0 || waiting}") Submit
 
 .modal#new-score
   .model-dialog
