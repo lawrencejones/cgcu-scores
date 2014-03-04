@@ -20,8 +20,9 @@ globCoffee = (dpath) ->
 module.exports = (options) ->
   return (req, res) ->
     res.setHeader 'Content-Type', 'text/javascript'
-    res.send (globCoffee options.angularPath)
-      .map((f) -> coffee.compile fs.readFileSync(f, 'utf8'))
+    src = globCoffee(options.angularPath)
+      .map (f) -> coffee.compile fs.readFileSync(f, 'utf8')
       .reverse()
       .reduce (a,c) -> a + c
+    res.send src
 

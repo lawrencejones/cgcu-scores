@@ -16,7 +16,11 @@ STY := $(shell find stylesheets -name "*.styl")
 
 ASSETS := public/js/app.js public/stylesheets/style.css
 
-.PHONY: all clean rebuild
+.PHONY: all clean rebuild start
+
+# Starts dev server
+start:
+	coffee app/app.coffee
 
 # Phony all target
 all: target $(LIB) $(ASSETS)

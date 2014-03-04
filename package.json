@@ -14,7 +14,7 @@
     "jade": "*",
     "stylus": "*",
     "nib": "*",
-    "coffee-script": "*",
+    "coffee-script": "1.7.1",
     "mongoose": "*",
     "passport": "*",
     "bcrypt-nodejs": "latest",
